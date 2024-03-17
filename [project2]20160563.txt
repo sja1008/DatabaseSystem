@@ -1,0 +1,274 @@
+﻿USE project2;
+
+CREATE TABLE contracted(start_date DATE NOT NULL,due_date DATE NOT NULL,account_number VARCHAR(20) NOT NULL,customer_id INTEGER NOT NULL);
+
+ALTER TABLE contracted ADD  PRIMARY KEY (customer_id);
+
+CREATE TABLE customer(customer_id INTEGER NULL,customer_name VARCHAR(20) NOT NULL,contact VARCHAR(50) NOT NULL,address VARCHAR(50) NOT NULL);
+
+ALTER TABLE customer ADD  PRIMARY KEY (customer_id);
+
+CREATE TABLE not_contracted (credit_card_number VARCHAR(20) NOT NULL,credit_card_due_date DATE NOT NULL,customer_id INTEGER NOT NULL);
+
+ALTER TABLE not_contracted ADD  PRIMARY KEY (customer_id);
+
+CREATE TABLE package (package_id INTEGER NULL,package_type VARCHAR(20) NOT NULL,package_weight FLOAT NOT NULL,timeliness VARCHAR(20) NOT NULL,content VARCHAR(20) NULL,_value DECIMAL(19, 4 ) NULL);
+
+ALTER TABLE package	ADD  PRIMARY KEY (package_id);
+
+CREATE TABLE plane(_time TIMESTAMP NOT NULL,package_id INTEGER NOT NULL,plane_id INTEGER NOT NULL);
+
+ALTER TABLE plane ADD PRIMARY KEY (package_id,_time);
+
+CREATE TABLE ship(shipping_date DATE NOT NULL,delivered_date DATE NULL,package_id INTEGER NOT NULL,sender_id INTEGER NOT NULL,receiver_id INTEGER NOT NULL,charge DECIMAL(19,4) NOT NULL);
+
+ALTER TABLE ship ADD PRIMARY KEY (package_id);
+
+CREATE TABLE tracking(_time TIMESTAMP NULL, package_id INTEGER NOT NULL);
+
+ALTER TABLE tracking ADD PRIMARY KEY (package_id,_time);
+
+CREATE TABLE truck(	_time TIMESTAMP NOT NULL,package_id INTEGER NOT NULL, truck_id INTEGER NOT NULL);
+
+ALTER TABLE truck ADD PRIMARY KEY (package_id,_time);
+
+CREATE TABLE warehouse(	_time TIMESTAMP NOT NULL, package_id INTEGER NOT NULL, warehouse_id INTEGER NOT NULL);
+
+ALTER TABLE warehouse	ADD  PRIMARY KEY (package_id,_time);
+
+ALTER TABLE contracted	ADD FOREIGN KEY R_11 (customer_id) REFERENCES customer(customer_id);
+
+ALTER TABLE not_contracted	ADD FOREIGN KEY R_12 (customer_id) REFERENCES customer(customer_id);
+
+ALTER TABLE plane	ADD FOREIGN KEY R_19 (package_id,_time) REFERENCES tracking(package_id,_time);
+
+ALTER TABLE ship	ADD FOREIGN KEY R_13 (package_id) REFERENCES package(package_id);
+
+ALTER TABLE ship	ADD FOREIGN KEY R_15 (sender_id) REFERENCES customer(customer_id);
+
+ALTER TABLE ship	ADD FOREIGN KEY R_16 (receiver_id) REFERENCES customer(customer_id);
+
+ALTER TABLE tracking	ADD FOREIGN KEY R_17 (package_id) REFERENCES package(package_id);
+
+ALTER TABLE truck	ADD FOREIGN KEY R_18 (package_id,_time) REFERENCES tracking(package_id,_time);
+
+ALTER TABLE warehouse	ADD FOREIGN KEY R_20 (package_id,_time) REFERENCES tracking(package_id,_time);
+
+
+
+# customer
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (7489,"Irene Scott","+821045671246","Longchamps");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (5885,"Cadman Bullock","+1758190371","Helkijn");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (1823,"Tucker Booker","+167147920","Niort");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (7904,"Clio Deleon","+2164057913","Lebbeke");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (2438,"Kasper Chapman","+230187423830","Nives");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (0210,"Basil Britt","+25018761387","Solingen");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (9814,"Cara Berg","+290187961418","San Giovanni Suergiu");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (7470,"Sarah Swanson","+3014215796","Nässjö");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (8620,"Quemby Hubbard","+355136874102","Chiari");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (9973,"Jacob Tyson","+37718002163","Rouyn-Noranda");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (4783,"Cara Berg","+44112250004","San Giovanni Suergiu");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (5739,"Hollee Butler","+457412892003","Maria");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (4613,"Jacob Tyson","+4678910536","Rouyn-Noranda");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (9586,"Fritz Hampton","+497810063967","Pietrarubbia");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (2458,"Tana Garza","+5001231774465","Coihueco");
+
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (9048,"Kimberley Briggs","+5031274896309","Wellington");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (4319,"Alfreda Merritt","+53125470037","Minucciano");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (1706,"Tatum Welch","+599781372069","Hamilton");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (8607,"Nola Cervantes","+6018746913","Ucluelet");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (0771,"Caryn Welch","+66486131876","Novgorod");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (8286,"Kylee Bender","+82109000925","Colchester");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (6041,"Rachel Baldwin","+6725541083","Warburg");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (5800,"Ishmael Bush","+6500476511","Colombo");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (9350,"Myles Parker","+66791400268","Kaneohe");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (8183,"Uriah Brock","+67789045931","Besançon");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (6525,"Hall Ingram","+10145578804","Graneros");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (3072,"Martina Dotson","+788451003","Biryuch");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (6380,"Brady Goodwin","+81410255703","Lourdes");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (6268,"Quentin Harrison","85512047781130","Barrancabermeja");
+INSERT INTO customer (customer_id,customer_name,contact,address) VALUES (8499,"Veda Alexander","+90115247634155","Mörfelden-Walldorf");
+
+# contracted
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2014-10-19","2022-10-18","619566-34-001604",7489);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2015-11-16","2021-06-15","055119-55-979892",5885);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2011-11-08","2022-12-29","626341-06-385290",1823);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2015-10-08","2021-05-18","058078-79-657583",7904);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2010-10-24","2023-06-11","784359-79-584353",2438);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2017-05-14","2021-02-28","841127-21-081142",0210);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2011-11-24","2024-06-25","349644-62-005485",9814);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2015-01-26","2021-06-12","258691-25-801099",7470);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2018-05-26","2025-02-14","219188-01-590208",8620);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2015-03-26","2022-08-11","122334-39-859083",9973);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2014-01-06","2024-12-08","277301-40-779511",4783);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2012-11-10","2021-01-22","514802-88-688675",5739);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2017-01-03","2021-02-13","889024-40-359932",4613);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2020-03-06","2025-07-03","952949-63-950059",9586);
+INSERT INTO contracted (start_date,due_date,account_number,customer_id) VALUES ("2011-09-12","2022-11-21","617940-13-963594",2458);
+
+
+#not_contracted
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5479 2522 5827 4305","2025-03-31",9048);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5504 1563 3368 5329","2021-06-30",4319);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5225 1583 5435 3421","2024-04-30",1706);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5487 4570 6973 8394","2024-02-29",8607);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5518 2146 8440 7894","2024-07-31",0771);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5434 9484 1958 1439","2024-12-31",8286);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5374 8287 7200 7176","2022-07-31",6041);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5594 1907 3034 7218","2022-09-30",5800);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5591 4043 8068 3308","2025-06-30",9350);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5405 9739 1683 3047","2025-12-31",8183);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5571 4693 9976 9269","2023-06-30",6525);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5537 1208 6325 6514","2022-07-31",3072);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5330 4518 1158 7695","2025-10-31",6380);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5142 1375 9147 5270","2023-03-31",6268);
+INSERT INTO not_contracted (credit_card_number, credit_card_due_date,customer_id) VALUES ("5115 1806 3816 8683","2025-10-31",8499);
+
+
+#package
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1642072989,"small box",1.23,"overnight","food", 100000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1682061083,"larger boxes",16.61,"second day","electronics",450000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1604062336,"larger boxes",50.04,"second day","electronics",2000000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1695101892,"small box",2.81,"second day",null,50000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1608082529,"small box",1.96,"second day","clothes",300000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1622100386,"small box",4.90,"overnight",null,90000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1650050686,"larger boxes",37.39,"overnight","clothes",550000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1623042732,"flat envelope",0.33,"overnight",null,1000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1607020865,"small box",2.74,"overnight",null,80000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1606042564,"flat envelope",0.85,"overnight",null,1000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1678071476,"flat envelope",0.13,"overnight",null,3000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1650092009,"small box",4.65,"longer","electronics",200000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1670012916,"larger boxes",44.60,"overnight","electronics",5000000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1689031486,"larger boxes",21.31,"longer","food",30000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1652012812,"flat envelope",0.51,"overnight",null,2000);
+INSERT INTO package (package_id,package_type,package_weight,timeliness,content,_value) VALUES (1111111111,"small box",0.79,"second day",null,5000);
+
+
+#tracking
+INSERT INTO tracking (_time,package_id) VALUES ("2021-03-08 04:34:27",1642072989);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-09 15:33:01",1682061083);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-30 23:24:48",1604062336);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-30 10:46:04",1695101892);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-10-22 23:20:13",1608082529);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-07 23:49:38",1622100386);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-31 09:24:48",1650050686);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-04-30 17:46:53",1623042732);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-11-01 22:33:34",1607020865);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-20 12:46:04",1606042564);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-12-31 09:30:01",1678071476);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-05-05 07:26:14",1650092009);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-11-17 00:20:13",1670012916);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-11 20:37:14",1689031486);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-12-11 00:22:10",1652012812);
+
+INSERT INTO tracking (_time,package_id) VALUES ("2021-03-09 19:02:42",1642072989);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-09 18:38:01",1682061083);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-31 05:46:53",1604062336);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-31 11:30:01",1695101892);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-10-23 18:37:14",1608082529);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-08 08:49:38",1622100386);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-09-01 09:24:48",1650050686);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-05-01 05:46:53",1623042732);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-11-02 22:33:34",1607020865);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-20 14:46:04",1606042564);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-12-31 23:30:01",1678071476);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-05-05 17:26:14",1650092009);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-11-17 05:20:13",1670012916);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-12 04:37:14",1689031486);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-12-11 10:22:10",1652012812);
+
+INSERT INTO tracking (_time,package_id) VALUES ("2021-03-09 04:34:27",1642072989);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-09 18:33:01",1682061083);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-31 03:24:48",1604062336);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-01-02 10:46:04",1695101892);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-10-23 17:20:13",1608082529);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-03-10 12:34:27",1642072989);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-09 20:33:01",1682061083);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-12-31 09:24:48",1604062336);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-01-02 14:46:04",1695101892);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-10-24 17:20:13",1608082529);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-08 18:49:38",1622100386);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-09-02 09:24:48",1650050686);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-05-01 08:46:53",1623042732);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-11-04 22:33:34",1607020865);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-08-20 18:46:04",1606042564);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-01-02 11:30:01",1678071476);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-05-05 23:26:14",1650092009);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-11-17 07:20:13",1670012916);
+INSERT INTO tracking (_time,package_id) VALUES ("2019-09-12 15:37:14",1689031486);
+INSERT INTO tracking (_time,package_id) VALUES ("2020-12-11 22:22:10",1652012812);
+INSERT INTO tracking (_time,package_id) VALUES ("2021-05-01 07:22:10",1111111111);
+
+
+#plane
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2021-03-08 04:34:27",1642072989,9298);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-09-09 15:33:01",1682061083,2269);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-12-30 23:24:48",1604062336,6102);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-12-30 10:46:04",1695101892,9252);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-10-22 23:20:13",1608082529,5271);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-08-07 23:49:38",1622100386,0368);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-08-31 09:24:48",1650050686,4180);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2021-04-30 17:46:53",1623042732,8380);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-11-01 22:33:34",1607020865,2328);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-08-20 12:46:04",1606042564,6414);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-12-31 09:30:01",1678071476,9882);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-05-05 07:26:14",1650092009,3815);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-11-17 00:20:13",1670012916,6295);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2019-09-11 20:37:14",1689031486,4194);
+INSERT INTO plane (_time,package_id,plane_id) VALUES ("2020-12-11 00:22:10",1652012812,4192);
+
+
+#warehouse
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2021-03-09 04:34:27",1642072989,8564);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2019-09-09 18:33:01",1682061083,2714);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2019-12-31 03:24:48",1604062336,8730);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-01-02 10:46:04",1695101892,5422);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2019-10-23 17:20:13",1608082529,2714);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-08-08 08:49:38",1622100386,2111);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-09-01 09:24:48",1650050686,2111);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2021-05-01 05:46:53",1623042732,8730);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2019-11-02 22:33:34",1607020865,8564);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-08-20 14:46:04",1606042564,8564);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-12-31 23:30:01",1678071476,1810);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-05-05 17:26:14",1650092009,2111);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-11-17 05:20:13",1670012916,6406);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2019-09-12 04:37:14",1689031486,7499);
+INSERT INTO warehouse (_time,package_id,warehouse_id) VALUES ("2020-12-11 10:22:10",1652012812,8564);
+
+
+#truck
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2021-03-10 12:34:27",1642072989,6595);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2019-09-09 20:33:01",1682061083,8232);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2019-12-31 09:24:48",1604062336,1600);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-01-02 14:46:04",1695101892,7765);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2019-10-24 17:20:13",1608082529,1600);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-08-08 18:49:38",1622100386,4127);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-09-02 09:24:48",1650050686,5144);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2021-05-01 08:46:53",1623042732,1721);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2019-11-04 22:33:34",1607020865,8232);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-08-20 18:46:04",1606042564,7765);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2021-01-02 11:30:01",1678071476,1810);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-05-05 23:26:14",1650092009,1721);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-11-17 07:20:13",1670012916,6406);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2019-09-12 15:37:14",1689031486,3062);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2020-12-11 22:22:10",1652012812,4127);
+INSERT INTO truck (_time,package_id,truck_id) VALUES ("2021-05-01 07:22:10",1111111111,1721);
+
+
+#ship
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2021-03-08","2021-03-11",1642072989,6268,8183,50700);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-09-09","2019-09-09",1682061083,2458,9586,12300);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-12-30","2019-12-31",1604062336,6041,1823,23200);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-12-30","2020-01-02",1695101892,6041,2458,20300);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-10-22","2019-10-25",1608082529,5800,8183,26200);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-08-07","2020-08-08",1622100386,6268,4319,06000);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-08-31","2020-09-02",1650050686,9350,5800,34000);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2021-04-30",null,1623042732,9814,9048,18005);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-11-01","2019-11-05",1607020865,8183,8499,22800);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-08-20","2020-08-20",1606042564,9814,9973,52700);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-12-31","2021-01-03",1678071476,0771,6268,16400);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-05-04","2020-05-06",1650092009,9814,4319,03500);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-11-16","2020-11-17",1670012916,3072,1823,06400);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2019-09-11","2019-09-12",1689031486,4613,9350,67200);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2020-12-10","2020-12-12",1652012812,7489,5739,16200);
+INSERT INTO ship (shipping_date,delivered_date,package_id,sender_id,receiver_id,charge) VALUES ("2021-04-30",null,1111111111,6268,7489,10646);
